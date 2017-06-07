@@ -2,8 +2,8 @@ from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
-@app.route('/Page1')
-def Page1():
+@app.route('/')
+def UserInputPage():
   return render_template('Page1.html')
 
 @app.route('/Page2')
