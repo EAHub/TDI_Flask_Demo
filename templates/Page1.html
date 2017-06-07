@@ -2,23 +2,51 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Hello, World!</title>
+		<title>Page1</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 		<div>
-  			<h1>Hello, World! This is a test.</h1>
-			<p>Can I change things?</p>
-			<br>
-			<p><b>that would be nice to know…</b></p>
 
-			<form id='ticker_symbol' method='post' action='Page2'>	
-	  		<p>Please provide the ticker symbol: <input type='text' name='ticker' /></p>
+  		<h1>Assaf Stock Tracker</h1>
+  		<br>
+  		<p>Hello, please complete this form to get a plot of the desired stock features:</p>
+		<br>
 
-	  		<p>Done?</p>
-	  		<input type='submit' value='NextButton' />
+			<form id='Page1_Form' method='post' action='Page2'>
+			 	<div>
+			    	<input type="text" id="ticker_symbol" name="ticker_symbol" value="ticker_symbol">
+			 	   	<label for="ticker_symbol"><b>Please provide the ticker symbol here (e.g. GOOG):</b></label>
+			 	</div>
+
+
+			  	<br>
+	  			<p>Next, please check the boxes to indicate what data should be displayed in the resulting plot:</p>
+	  			<br>
+
+
+	  			<div>
+	  				<input type="checkbox" id="closing" name="closing" value="closing">
+	  				<label for="closing">Closing Price</label>
+	  			</div>
+	  			<div>
+	  				<input type="checkbox" id="closing" name="closing" value="closing">
+	  				<label for="closing">Adjusted Closing Price</label>
+	  			</div>
+	  			<div>
+	  				<input type="checkbox" id="closing" name="closing" value="closing">
+	  				<label for="closing">Opening Price</label>
+	  			</div>
+	  			<div>
+	  				<input type="checkbox" id="closing" name="closing" value="closing">
+	  				<label for="closing">Adjusted Opening Price</label>
+			  	</div>
+
+			  	<input type='submit' value='Next' />
+	
+			</form>
 
 		</div>
 	</body>
