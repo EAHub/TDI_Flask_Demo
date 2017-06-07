@@ -2,7 +2,12 @@ from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
+
 @app.route('/')
+def main():
+  return redirect('/Page1')
+
+@app.route('/Page1', methods=['GET','POST'])
 def Page1():
   return render_template('Page1.html')
 
