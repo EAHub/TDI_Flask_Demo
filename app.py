@@ -10,5 +10,5 @@ def main():
 def Page1():
   return render_template('Page1.html')
 
-if __name__ == '__main__':
+if __EliTickerApp__ == '__main__':
   app.run(port=33507)
