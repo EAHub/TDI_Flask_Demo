@@ -24,7 +24,7 @@ def plotter():
 	# adj_close = request.form['adj_close'],
 	# opening = request.form['opening'],
 	# adj_opening = request.form['adj_opening']
-	
+
 	ts_plot = figure(title="line", plot_width=300, plot_height=300)
 	ts_plot.line(x=[1, 2, 3, 4, 5], y=[6, 7, 2, 4, 5])
 	return ts_plot
@@ -32,8 +32,8 @@ def plotter():
 
 @app.route('/Page2', methods=['GET', 'POST'])
 def Page2():
-	bokeh_plot = plotter()
-	script, div = embed.components(bokeh_plot)
+	plot = plotter()
+	script, div = embed.components(plot)
 	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script)
 
 if __name__ == '__main__':

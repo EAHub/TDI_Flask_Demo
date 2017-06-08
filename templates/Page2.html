@@ -8,6 +8,8 @@
 	<link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.10.0.min.css" type="text/css" />
   	<script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.10.0.min.js"></script>
 
+	{{ div|safe }}
+
 </head>
 
 
@@ -15,8 +17,7 @@
 	<div>
   		<h1>Resulting Plot for {{ ticker_symbol }}</h1>
 		<p>The plot should go here</p>
-
-   		{{ div|safe }}
+		
    		{{ script|safe }}
 
 		<br>
