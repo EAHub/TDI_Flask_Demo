@@ -7,8 +7,13 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
 	<link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.10.0.min.css" type="text/css" />
   	<script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.10.0.min.js"></script>
+
+  	{{ script|safe }}
+
 </head>
 
 
@@ -17,8 +22,9 @@
   		<h1>Resulting Plot for {{ ticker_symbol }} </h1>
 		<p>The plot should go here</p>
 
+		<div class='bokeh'>
    		{{ div|safe }}
-   		{{ script|safe }}
+   		</div>
 
 		<br>
 		<a href="/Page1">Go Back?</a>

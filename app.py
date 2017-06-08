@@ -18,23 +18,29 @@ def Page1():
   return render_template('Page1.html')
 
 
-def plotter():
-	ticker_symbol=request.form['ticker_symbol']
-	closing = request.form['closing'],
-  	adj_close = request.form['adj_close'],
-  	opening = request.form['opening'],
-  	adj_opening = request.form['adj_opening']
-
-	p = figure(title="line", plot_width=300, plot_height=300)
-	p.line(x=[1, 2, 3, 4, 5], y=[6, 7, 2, 4, 5])
-	return p
-
+# def plotter():
+# 	ticker_symbol=request.form['ticker_symbol']
+# 	closing = request.form['closing'],
+#   adj_close = request.form['adj_close'],
+#   opening = request.form['opening'],
+#  	adj_opening = request.form['adj_opening']
+	
 @app.route('/Page2', methods=['GET', 'POST'])
 def Page2():
-	time_series = plotter()
-	script, div = components(p)
-	return render_template('Page2.html', 
-		ticker_symbol=request.form['ticker_symbol'], script = script, div = div)
+
+	time_series = figure(title = "Time Series")
+    time_series.line([1,2,3,4],[2,4,6,8])
+
+    global script
+    global div
+
+    script, div = components(time_series)
+
+    return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], 
+    	div = div, script = script)
+
+    output_file("Page2.html")
+    show(time_series)
 
 if __name__ == '__main__':
   app.run(port=33507)
