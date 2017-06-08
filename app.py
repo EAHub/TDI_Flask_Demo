@@ -34,6 +34,7 @@ def plotter():
 @app.route('/Page2', methods=['GET', 'POST'])
 def Page2():
 	plot = plotter()
+	script, div = embed.components(plot)
 	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script)
 
 if __name__ == '__main__':

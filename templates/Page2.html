@@ -6,10 +6,12 @@
 	<title>Page2</title>
 
 
-	<link href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.0.min.css" rel="stylesheet" type="text/css">
-	<link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.0.min.css" rel="stylesheet" type="text/css">
+	<link href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.css" rel="stylesheet" type="text/css">
+	<link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.5.min.css" rel="stylesheet" type="text/css">
 	<script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.5.min.js"></script>
 	<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.5.min.js"></script>
+	
+	{{ div|safe }}
 
 </head>
 
@@ -19,7 +21,6 @@
   		<h1>Resulting Plot for {{ ticker_symbol }}</h1>
 		<p>The plot should go here</p>
 
-		{{ div|safe }}
    		{{ script|safe }}
 
 		<br>
