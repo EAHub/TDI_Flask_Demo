@@ -12,11 +12,11 @@
 
 <body>
 	<div>
-  		<h1>Resulting Plot</h1>
+  		<h1>Resulting Plot for {{ ticker_symbol }} </h1>
 		<p>The plot should go here</p>
 
-		<p>Hopefully I have some values {{ ticker_symbol }} </p>
-
+		<p>You requested the following values:</p>
+		<p> {{ closing }} {{ adj_close }} {{ opening }} {{ adj_opening }} </p>
 		<br>
 		<a href="/Page1">Go Back?</a>
 	</div>
