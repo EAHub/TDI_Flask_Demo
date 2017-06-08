@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from bokeh.charts import TimeSeries, show, output_file
 from bokeh.layouts import column
-from bokeh.embed import autoload_static
+from bokeh import embed
 from bokeh.resources import CDN
 import numpy as np
 import pandas as pd
@@ -33,7 +33,7 @@ def plotter():
 @app.route('/Page2', methods=['GET', 'POST'])
 def Page2():
 	bokeh_plot = plotter()
-	script, div = components(bokeh_plot)
+	script, div = embed.components(bokeh_plot)
 	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script)
 
 if __name__ == '__main__':
