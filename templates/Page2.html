@@ -8,19 +8,16 @@
 	<link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.10.0.min.css" type="text/css" />
   	<script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.10.0.min.js"></script>
 
-  	{{ script|safe }}
-
 </head>
 
 
 <body>
 	<div>
-  		<h1>Resulting Plot for {{ ticker_symbol }} </h1>
+  		<h1>Resulting Plot for {{ ticker_symbol }}</h1>
 		<p>The plot should go here</p>
 
-		<div class='bokeh'>
    		{{ div|safe }}
-   		</div>
+   		{{ script|safe }}
 
 		<br>
 		<a href="/Page1">Go Back?</a>
