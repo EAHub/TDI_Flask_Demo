@@ -24,20 +24,21 @@ def Page1():
 #   adj_close = request.form['adj_close'],
 #   opening = request.form['opening'],
 #  	adj_opening = request.form['adj_opening']
-	
+
+
 @app.route('/Page2', methods=['GET', 'POST'])
 def Page2():
 	time_series = figure(title = "Time Series")
 	time_series.line([1,2,3,4],[2,4,6,8])
-    
-    global script
-    global div
-    
-    script, div = components(time_series)
-    return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script)
-    
-    output_file("Page2.html")
-    show(time_series)
+	
+	global script
+	global div
+
+	script, div = components(time_series)
+	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script)
+
+	output_file("Page2.html")
+	show(time_series)
 
 
 if __name__ == '__main__':
