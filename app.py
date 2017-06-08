@@ -21,26 +21,22 @@ def Page1():
 
 def plotter():
 
-	closing = request.form.getlist('closing')
-	adj_close = request.form.getlist('adj_close')
-	opening = request.form.getlist('opening')
-	adj_opening = request.form.getlist('adj_opening')
+	selected = request.form.getlist('check')
 
-
-	if closing != None:
+	if "closing" in selected:
 		ts_plot = figure(title="CLOSING SELECTED", plot_width=300, plot_height=300)
 
-	if adj_close != None:
+	if "adj_close" in selected:
 		ts_plot = figure(title="ADJ CLOSE SELECTED", plot_width=300, plot_height=300)
 
-	if opening != None:
+	if "opening" in selected:
 		ts_plot = figure(title="OPENING SELECTED", plot_width=300, plot_height=300)
 
-	if adj_opening != None:
+	if "adj_opening" in selected:
 		ts_plot = figure(title="ADJ OPEN SELECTED", plot_width=300, plot_height=300)
 
 	ts_plot.line(x=[1, 2, 3, 4, 5], y=[6, 7, 2, 4, 5])
-	
+
 	return ts_plot
 
 
