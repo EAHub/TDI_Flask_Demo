@@ -17,27 +17,25 @@ def main():
 def Page1():
   return render_template('Page1.html')
 
+def plotter():
+	ticker_symbol=request.form['ticker_symbol']
+	closing = request.form['closing'],
+	adj_close = request.form['adj_close'],
+	opening = request.form['opening'],
+	adj_opening = request.form['adj_opening']
 
-# def plotter():
-# 	ticker_symbol=request.form['ticker_symbol']
-# 	closing = request.form['closing'],
-#   adj_close = request.form['adj_close'],
-#   opening = request.form['opening'],
-#  	adj_opening = request.form['adj_opening']
+	ts_plot = figure(title = "Time Series")
+	ts_plot.line([1,2,3,4],[2,4,6,8])
+
+	return ts_plot
 
 
 @app.route('/Page2', methods=['GET', 'POST'])
 def Page2():
 
-	time_series = figure(title = "Time Series")
-	time_series.line([1,2,3,4],[2,4,6,8])
-
-	script, div = components(time_series)
-	
+	bokeh_plot = plotter()
+	script, div = components(bokeh_plot)
 	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script)
-	output_file("Page2.html")
-	show(time_series)
-
 
 if __name__ == '__main__':
   app.run(port=33507)
