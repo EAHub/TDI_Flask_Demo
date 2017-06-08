@@ -2,8 +2,9 @@ from flask import Flask, render_template, request, redirect
 from bokeh.charts import TimeSeries, show, output_file
 from bokeh.plotting import figure, output_file, show
 from bokeh.layouts import column
-from bokeh import embed
 from bokeh.resources import CDN
+from bokeh import embed
+from bokeh.embed import components
 import numpy as np
 import pandas as pd
 
@@ -33,7 +34,6 @@ def plotter():
 @app.route('/Page2', methods=['GET', 'POST'])
 def Page2():
 	plot = plotter()
-	script, div = embed.components(plot)
 	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script)
 
 if __name__ == '__main__':
