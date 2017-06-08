@@ -19,10 +19,10 @@ def Page1():
 
 def plotter():
 	ticker_symbol=request.form['ticker_symbol']
-	closing = request.form['closing'],
-	adj_close = request.form['adj_close'],
-	opening = request.form['opening'],
-	adj_opening = request.form['adj_opening']
+	# closing = request.form['closing'],
+	# adj_close = request.form['adj_close'],
+	# opening = request.form['opening'],
+	# adj_opening = request.form['adj_opening']
 
 	ts_plot = figure(title = "Time Series")
 	ts_plot.line([1,2,3,4],[2,4,6,8])
