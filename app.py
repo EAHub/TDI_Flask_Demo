@@ -32,7 +32,7 @@ def plotter():
 @app.route('/Page2', methods=['GET', 'POST'])
 def Page2():
 	time_series = plotter()
-	script, div = embed.components(p)
+	script, div = components(p)
 	return render_template('Page2.html', 
 		ticker_symbol=request.form['ticker_symbol'], script = script, div = div)
 
