@@ -21,7 +21,7 @@ def Page1():
 
 @app.route('/Page2', methods=['GET', 'POST'])
 def Page2():
-  return render_template('Page2.html')
+  return render_template('Page2.html', ticker_symbol=request.form['ticker_symbol'])
 
 if __name__ == '__main__':
   app.run(port=33507)
