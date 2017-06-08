@@ -27,8 +27,20 @@ def plotter():
 	adj_opening = request.form.getlist('adj_opening')
 
 
-	ts_plot = figure(title=closing+adj_close+opening+adj_opening, plot_width=300, plot_height=300)
+	if closing != None:
+		ts_plot = figure(title="CLOSING SELECTED", plot_width=300, plot_height=300)
+
+	if adj_close != None:
+		ts_plot = figure(title="ADJ CLOSE SELECTED", plot_width=300, plot_height=300)
+
+	if opening != None:
+		ts_plot = figure(title="OPENING SELECTED", plot_width=300, plot_height=300)
+
+	if adj_opening != None:
+		ts_plot = figure(title="ADJ OPEN SELECTED", plot_width=300, plot_height=300)
+
 	ts_plot.line(x=[1, 2, 3, 4, 5], y=[6, 7, 2, 4, 5])
+	
 	return ts_plot
 
 
@@ -36,7 +48,6 @@ def plotter():
 def Page2():
 	plot = plotter()
 	script, div = embed.components(plot)
-
 	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script)
 
 if __name__ == '__main__':
