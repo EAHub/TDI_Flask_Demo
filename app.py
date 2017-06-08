@@ -20,13 +20,14 @@ def Page1():
   return render_template('Page1.html')
 
 def plotter():
-	# ticker_symbol=request.form['ticker_symbol']
-	# closing = request.form['closing']
-	# adj_close = request.form['adj_close']
-	# opening = request.form['opening']
-	# adj_opening = request.form['adj_opening']
 
-	ts_plot = figure(title="line", plot_width=300, plot_height=300)
+	closing = request.form.getlist('closing')
+	adj_close = request.form.getlist('adj_close')
+	opening = request.form.getlist('opening')
+	adj_opening = request.form.getlist('adj_opening')
+
+
+	ts_plot = figure(title=closing+adj_close+opening+adj_opening, plot_width=300, plot_height=300)
 	ts_plot.line(x=[1, 2, 3, 4, 5], y=[6, 7, 2, 4, 5])
 	return ts_plot
 
@@ -36,9 +37,7 @@ def Page2():
 	plot = plotter()
 	script, div = embed.components(plot)
 
-	closing = request.form.getlist('closing')
-	
-	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script, closing = closing)
+	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script)
 
 if __name__ == '__main__':
   app.run(port=33507)
