@@ -28,15 +28,13 @@ def Page1():
 
 @app.route('/Page2', methods=['GET', 'POST'])
 def Page2():
+
 	time_series = figure(title = "Time Series")
 	time_series.line([1,2,3,4],[2,4,6,8])
-	
-	global script
-	global div
 
 	script, div = components(time_series)
+	
 	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script)
-
 	output_file("Page2.html")
 	show(time_series)
 
