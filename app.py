@@ -23,8 +23,7 @@ def plotter():
 
 	selected = request.form.getlist('check')
 
-	# This should give me the API key saved in my Heroku account
-	# API_Key = os.environ['QUANDL']
+	API_Key = os.environ['QUANDL']
 
 	if "closing" in selected:
 		ts_plot = figure(title="CLOSING SELECTED", plot_width=300, plot_height=300)
@@ -39,6 +38,9 @@ def plotter():
 		ts_plot = figure(title="ADJ OPEN SELECTED", plot_width=300, plot_height=300)
 
 	ts_plot.line(x=[1, 2, 3, 4, 5], y=[6, 7, 2, 4, 5])
+
+	if len(API_Key) > 15:
+		ts_plot.line(5, color='navy')
 
 	return ts_plot
 
