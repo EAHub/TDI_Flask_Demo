@@ -11,6 +11,7 @@ import os
 
 
 app = Flask(__name__)
+API_Key = os.environ['QUANDL']
 
 @app.route('/')
 def main():
@@ -23,8 +24,6 @@ def Page1():
 def plotter():
 
 	selected = request.form.getlist('check')
-
-	API_Key = os.environ['QUANDL']
 
 	if "closing" in selected:
 		ts_plot = figure(title="CLOSING SELECTED", plot_width=300, plot_height=300)
