@@ -39,8 +39,8 @@ def plotter():
 
 	ts_plot.line(x=[1, 2, 3, 4, 5], y=[6, 7, 2, 4, 5])
 
-	#if len(API_Key) > 15:
-	#	ts_plot.line(5, color='navy')
+	if len(API_Key) > 15:
+		ts_plot.line(x=[1,5],y=[6,6] color='navy')
 
 	return ts_plot
 
