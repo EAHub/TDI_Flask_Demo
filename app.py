@@ -7,6 +7,7 @@ from bokeh import embed
 from bokeh.embed import components
 import numpy as np
 import pandas as pd
+import os
 
 
 app = Flask(__name__)
