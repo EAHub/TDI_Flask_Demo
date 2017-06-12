@@ -6,7 +6,6 @@ import json
 import requests
 import time
 from datetime
-from datetime import datetime, timedelta
 from bokeh.plotting import figure, output_file, show
 from bokeh import embed
 import cgi
