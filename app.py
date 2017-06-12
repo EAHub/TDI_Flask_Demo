@@ -1,7 +1,10 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash, url_for
 from bokeh.charts import TimeSeries, show, output_file
 from bokeh.plotting import figure, output_file, show
 from bokeh.layouts import column
+import config as con
+import datetime
+import quandl
 from bokeh.resources import CDN
 from bokeh import embed
 from bokeh.embed import components
@@ -16,7 +19,12 @@ import time
 
 
 app = Flask(__name__)
+
+# vars for API call composition from quandl
 API_Key = os.environ['QUANDL']
+now = datetime.now()
+start = (now - timedelta(days=30)).strftime('%Y-%m-%d')
+end = now.strftime('%Y-%m-%d')
 
 @app.route('/')
 def main():
@@ -32,10 +40,6 @@ def plotter():
 
 	# get the json format data from quandl with requests.get
 	ticker_symbol = request.form['ticker_symbol']
-
-	start = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
-	end = (datetime.now()).strftime('%Y-%m-%d')
-
 	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/'+ticker_symbol+'.json?start_date='+start+'&end_date='+end+'&order=asc&api_key='+API_Key
 	quandl_data = requests.get(data_source)
 
