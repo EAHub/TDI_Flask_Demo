@@ -1,33 +1,26 @@
-from flask import Flask, render_template, request, redirect, flash, url_for
-from bokeh.charts import TimeSeries, show, output_file
-from bokeh.plotting import figure, output_file, show
-from bokeh.layouts import column
-import config as con
-import datetime
-import quandl
-from bokeh.resources import CDN
-from bokeh import embed
-from bokeh.embed import components
-import numpy as np
-import requests
-import json
-import pandas as pd
+from flask import Flask, render_template, request, redirect, url_for
 from pandas import DataFrame, to_datetime
-import os
-import cgi
+import pandas
+import numpy as np
+import json
+import requests
 import time
+from datetime import datetime,timedelta
+from bokeh.plotting import figure, output_file, show
+from bokeh import embed
+import cgi
+from bokeh.charts import TimeSeries
+from bokeh.layouts import column
+from bokeh.resources import CDN
+from bokeh.embed import components
+import os
+
 
 
 app = Flask(__name__)
 
 # vars for API call composition from quandl
 API_Key = os.environ['QUANDL']
-
-# Setup Quandl datetime call
-quandl.ApiConfig.api_key = API_Key
-month = datetime.date.today().month
-last_month = month - 1
-year = datetime.date.today().year
 
 @app.route('/')
 def main():
@@ -43,22 +36,34 @@ def plotter():
 
 	# get the json format data from quandl with requests.get
 	ticker_symbol = request.form['ticker_symbol']
-	quandl_data = quandl.get('WIKI/' + ticker_symbol, collapse='daily')
+	now = datetime.now()
+	start = (now - timedelta(days=30)).strftime('%Y-%m-%d')
+	end = now.strftime('%Y-%m-%d')
+	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/'+ticker_symbol+'.json?start_date='+start+'&end_date='+end+'&order=asc&api_key='+API_Key
+	quandl_data = requests.get(data_source)
+
+	# using pandas to get a plottable df
+	data_req = DataFrame(quandl_data.json())
+	data_plot = DataFrame(data_req.ix['data','dataset'], columns = data_req.ix['column_names','dataset'])
+	data_plot.columns = [x.lower() for x in data_plot.columns]
+	
+	data_plot = data_plot.set_index(['date'])
+	data_plot.index = to_datetime(data_plot.index)
 
 	# plot conditional lines in Bokeh
-	ts_plot = TimeSeries(ticker_data.Close[-30:])
+	ts_plot = figure(x_axis_type = "datetime")
 
-	# if "closing" in selected:
-	# 	ts_plot.line(data_pd.index, data_pd["CLOSE"], color = "blue", legend = "Closing")
+	if "closing" in selected:
+		ts_plot.line(data_plot.index, data_plot['CLOSE'], color = 'blue', legend = 'Closing')
 
-	# if "adj_close" in selected:
-	# 	ts_plot.line(data_pd.index, data_pd["ADJ_CLOSE"], color = "green", legend = "Adjusted Closing")
+	if "adj_close" in selected:
+		ts_plot.line(data_plot.index, data_plot['ADJ_CLOSE'], color = 'green', legend = 'Adjusted Closing')
 
-	# if "opening" in selected:
-	# 	ts_plot.line(data_pd.index, data_pd["OPEN"], color = "yellow", legend = "Opening")
+	if "opening" in selected:
+		ts_plot.line(data_plot.index, data_plot['OPEN'], color = 'yellow', legend = 'Opening')
 
-	# if "adj_opening" in selected:
-	# 	ts_plot.line(data_pd.index, data_pd["ADJ_OPEN"], color = "red", legend = "Adjusted Opening")
+	if "adj_opening" in selected:
+		ts_plot.line(data_plot.index, data_plot['ADJ_OPEN'], color = 'red', legend = 'Adjusted Opening')
 
 	return ts_plot
 
