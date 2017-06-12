@@ -22,25 +22,37 @@ def Page1():
   return render_template('Page1.html')
 
 def plotter():
-
+	# find out what the user wants
 	selected = request.form.getlist('check')
 
+	# get the json format data from quandl with requests.get
+	ticker_symbol = request.form['ticker_symbol']
+	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/' + ticker_symbol + 
+	'.json?start_date=' + start + '&end_date=' + end + '&order=asc&api_key=' + API_Key
+	quandl_data = requests.get(data_source)
+
+	# using pandas to get a plottable df
+	data_req_pd = DataFrame(quandl_data.json())
+	data_pd = DataFrame(data_req_pd.ix['data','dataset'], columns = data_req_pd.ix['column_names','dataset'])
+	data_pd.columns = [x.lower() for x in df.columns]
+	
+	data_pd = data_pd.set_index(['date'])
+	data_pd.index = to_datetime(data_pd.index)
+
+	# plot conditional lines in Bokeh
+	ts_plot = figure(x_axis_type = "datetime")
+
 	if "closing" in selected:
-		ts_plot = figure(title="CLOSING SELECTED", plot_width=300, plot_height=300)
+		ts_plot.line(data_pd.index, data_pd['CLOSE'], color = "blue", legend = "Closing")
 
 	if "adj_close" in selected:
-		ts_plot = figure(title="ADJ CLOSE SELECTED", plot_width=300, plot_height=300)
+		ts_plot.line(data_pd.index, data_pd['ADJ_CLOSE'], color = "green", legend = "Adjusted Closing")
 
 	if "opening" in selected:
-		ts_plot = figure(title="OPENING SELECTED", plot_width=300, plot_height=300)
+		ts_plot.line(data_pd.index, data_pd['OPEN'], color = "yellow", legend = "Opening")
 
 	if "adj_opening" in selected:
-		ts_plot = figure(title="ADJ OPEN SELECTED", plot_width=300, plot_height=300)
-
-	ts_plot.line(x=[1, 2, 3, 4, 5], y=[6, 7, 2, 4, 5])
-
-	if len(API_Key) > 15:
-		ts_plot.line(x=[1,5], y=[6,6], color='navy')
+		ts_plot.line(data_pd.index, data_pd['ADJ_OPEN'], color = "red", legend = "Adjusted Opening")
 
 	return ts_plot
 
