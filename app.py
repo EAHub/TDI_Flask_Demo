@@ -22,9 +22,6 @@ app = Flask(__name__)
 
 # vars for API call composition from quandl
 API_Key = os.environ['QUANDL']
-now = datetime.now()
-start = (now - timedelta(days=30)).strftime('%Y-%m-%d')
-end = now.strftime('%Y-%m-%d')
 
 @app.route('/')
 def main():
@@ -40,6 +37,10 @@ def plotter():
 
 	# get the json format data from quandl with requests.get
 	ticker_symbol = request.form['ticker_symbol']
+	now = datetime.now()
+	start = (now - timedelta(days=30)).strftime('%Y-%m-%d')
+	end = now.strftime('%Y-%m-%d')
+	
 	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/'+ticker_symbol+'.json?start_date='+start+'&end_date='+end+'&order=asc&api_key='+API_Key
 	quandl_data = requests.get(data_source)
 
