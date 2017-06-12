@@ -5,7 +5,8 @@ import numpy as np
 import json
 import requests
 import time
-from datetime import datetime,timedelta
+from datetime
+from datetime import datetime, timedelta
 from bokeh.plotting import figure, output_file, show
 from bokeh import embed
 import cgi
@@ -37,12 +38,20 @@ def plotter():
 	# get the json format data from quandl with requests.get
 	ticker_symbol = request.form['ticker_symbol']
 	
-	start = 20170501
-	end = 20170612
-	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/PRICES.json?date.gte='+start+'&date.lt='+end+'&ticker='+ticker_symbol+'&api_key='+API_Key
-	quandl_data = requests.get(data_source)
-	data_req = quandl_data.json()
-	print(data_req)
+
+	# Try known working call
+	search_url = "https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?date.gte=20120101&date.lt=20120131&ticker=GOOG&api_key="+API_Key
+	#perform the request of the url
+	search_r = requests.get(search_url)
+	print(search_data)
+
+
+	# start = 20170501
+	# end = 20170612
+	# data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/PRICES.json?date.gte='+start+'&date.lt='+end+'&ticker='+ticker_symbol+'&api_key='+API_Key
+	# quandl_data = requests.get(data_source)
+	# data_req = quandl_data.json()
+	# print(data_req)
 
 
 	# now = datetime.now()
