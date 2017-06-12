@@ -37,11 +37,9 @@ def plotter():
 	# get the json format data from quandl with requests.get
 	ticker_symbol = request.form['ticker_symbol']
 	
-	ts_plot = figure(x_axis_type = "datetime")
-
-	start = 2017-05-01
-	end = 2017-06-12
-	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/PRICES.json?start_date='+start+'&end_date='+end+'&ticker='+ticker_symbol+'&api_key='+API_Key
+	start = 20170501
+	end = 20170612
+	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/PRICES.json?date.gte='+start+'&date.lt='+end+'&ticker='+ticker_symbol+'&api_key='+API_Key
 	quandl_data = requests.get(data_source)
 	data_req = quandl_data.json()
 	print(data_req)
