@@ -36,14 +36,6 @@ def plotter():
 
 	# get the json format data from quandl with requests.get
 	ticker_symbol = request.form['ticker_symbol']
-	
-
-	# Try known working call
-	search_url = "https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?date.gte=20120101&date.lt=20120131&ticker=GOOG&api_key="+API_Key
-	#perform the request of the url
-	search_r = requests.get(search_url)
-	print(search_data)
-
 
 	# start = 20170501
 	# end = 20170612
