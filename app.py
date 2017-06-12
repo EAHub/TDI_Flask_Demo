@@ -23,6 +23,12 @@ app = Flask(__name__)
 # vars for API call composition from quandl
 API_Key = os.environ['QUANDL']
 
+# Setup Quandl datetime call
+quandl.ApiConfig.api_key = API_Key
+month = datetime.date.today().month
+last_month = month - 1
+year = datetime.date.today().year
+
 @app.route('/')
 def main():
   return redirect('/Page1')
@@ -37,35 +43,22 @@ def plotter():
 
 	# get the json format data from quandl with requests.get
 	ticker_symbol = request.form['ticker_symbol']
-	now = datetime.now()
-	start = (now - timedelta(days=30)).strftime('%Y-%m-%d')
-	end = now.strftime('%Y-%m-%d')
-	
-	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/'+ticker_symbol+'.json?start_date='+start+'&end_date='+end+'&order=asc&api_key='+API_Key
-	quandl_data = requests.get(data_source)
-
-	# using pandas to get a plottable df
-	data_req_pd = DataFrame(quandl_data.json())
-	data_pd = DataFrame(data_req_pd.ix['data','dataset'], columns = data_req_pd.ix['column_names','dataset'])
-	data_pd.columns = [x.lower() for x in data_pd.columns]
-	
-	data_pd = data_pd.set_index(['date'])
-	data_pd.index = to_datetime(data_pd.index)
+	quandl_data = quandl.get('WIKI/' + ticker_symbol, collapse='daily')
 
 	# plot conditional lines in Bokeh
-	ts_plot = figure(x_axis_type = "datetime")
+	ts_plot = TimeSeries(ticker_data.Close[-30:])
 
-	if "closing" in selected:
-		ts_plot.line(data_pd.index, data_pd["CLOSE"], color = "blue", legend = "Closing")
+	# if "closing" in selected:
+	# 	ts_plot.line(data_pd.index, data_pd["CLOSE"], color = "blue", legend = "Closing")
 
-	if "adj_close" in selected:
-		ts_plot.line(data_pd.index, data_pd["ADJ_CLOSE"], color = "green", legend = "Adjusted Closing")
+	# if "adj_close" in selected:
+	# 	ts_plot.line(data_pd.index, data_pd["ADJ_CLOSE"], color = "green", legend = "Adjusted Closing")
 
-	if "opening" in selected:
-		ts_plot.line(data_pd.index, data_pd["OPEN"], color = "yellow", legend = "Opening")
+	# if "opening" in selected:
+	# 	ts_plot.line(data_pd.index, data_pd["OPEN"], color = "yellow", legend = "Opening")
 
-	if "adj_opening" in selected:
-		ts_plot.line(data_pd.index, data_pd["ADJ_OPEN"], color = "red", legend = "Adjusted Opening")
+	# if "adj_opening" in selected:
+	# 	ts_plot.line(data_pd.index, data_pd["ADJ_OPEN"], color = "red", legend = "Adjusted Opening")
 
 	return ts_plot
 
