@@ -39,6 +39,11 @@ def plotter():
 	
 	ts_plot = figure(x_axis_type = "datetime")
 
+	start = 2017-05-01
+	end = 2017-06-12
+	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/'+ticker_symbol+'.json?start_date='+start+'&end_date='+end+'&order=asc&api_key='+API_Key
+	quandl_data = requests.get(data_source)
+
 
 	# now = datetime.now()
 	# start = (now - timedelta(days=30)).strftime('%Y-%m-%d')
