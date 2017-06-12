@@ -6,6 +6,8 @@ from bokeh.resources import CDN
 from bokeh import embed
 from bokeh.embed import components
 import numpy as np
+import requests
+import json
 import pandas as pd
 import os
 
@@ -27,7 +29,8 @@ def plotter():
 
 	# get the json format data from quandl with requests.get
 	ticker_symbol = request.form['ticker_symbol']
-	quandl_data = requests.get('https://www.quandl.com/api/v3/datasets/WIKI/'+ticker_symbol+'.json?start_date='+start+'&end_date='+end+'&order=asc&api_key='+API_Key)
+	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/'+ticker_symbol+'.json?start_date='+start+'&end_date='+end+'&order=asc&api_key='+API_Key
+	quandl_data = requests.get(data_source)
 
 	# using pandas to get a plottable df
 	data_req_pd = DataFrame(quandl_data.json())
