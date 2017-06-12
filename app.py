@@ -36,34 +36,38 @@ def plotter():
 
 	# get the json format data from quandl with requests.get
 	ticker_symbol = request.form['ticker_symbol']
-	now = datetime.now()
-	start = (now - timedelta(days=30)).strftime('%Y-%m-%d')
-	end = now.strftime('%Y-%m-%d')
-	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/'+ticker_symbol+'.json?start_date='+start+'&end_date='+end+'&order=asc&api_key='+API_Key
-	quandl_data = requests.get(data_source)
-
-	# using pandas to get a plottable df
-	data_req = DataFrame(quandl_data.json())
-	data_plot = DataFrame(data_req.ix['data','dataset'], columns = data_req.ix['column_names','dataset'])
-	data_plot.columns = [x.lower() for x in data_plot.columns]
 	
-	data_plot = data_plot.set_index(['date'])
-	data_plot.index = to_datetime(data_plot.index)
-
-	# plot conditional lines in Bokeh
 	ts_plot = figure(x_axis_type = "datetime")
 
-	if "closing" in selected:
-		ts_plot.line(data_plot.index, data_plot['CLOSE'], color = 'blue', legend = 'Closing')
 
-	if "adj_close" in selected:
-		ts_plot.line(data_plot.index, data_plot['ADJ_CLOSE'], color = 'green', legend = 'Adjusted Closing')
+	# now = datetime.now()
+	# start = (now - timedelta(days=30)).strftime('%Y-%m-%d')
+	# end = now.strftime('%Y-%m-%d')
+	# data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/'+ticker_symbol+'.json?start_date='+start+'&end_date='+end+'&order=asc&api_key='+API_Key
+	# quandl_data = requests.get(data_source)
 
-	if "opening" in selected:
-		ts_plot.line(data_plot.index, data_plot['OPEN'], color = 'yellow', legend = 'Opening')
+	# # using pandas to get a plottable df
+	# data_req = DataFrame(quandl_data.json())
+	# data_plot = DataFrame(data_req.ix['data','dataset'], columns = data_req.ix['column_names','dataset'])
+	# data_plot.columns = [x.lower() for x in data_plot.columns]
+	
+	# data_plot = data_plot.set_index(['date'])
+	# data_plot.index = to_datetime(data_plot.index)
 
-	if "adj_opening" in selected:
-		ts_plot.line(data_plot.index, data_plot['ADJ_OPEN'], color = 'red', legend = 'Adjusted Opening')
+	# # plot conditional lines in Bokeh
+	# ts_plot = figure(x_axis_type = "datetime")
+
+	# if "closing" in selected:
+	# 	ts_plot.line(data_plot.index, data_plot['CLOSE'], color = 'blue', legend = 'Closing')
+
+	# if "adj_close" in selected:
+	# 	ts_plot.line(data_plot.index, data_plot['ADJ_CLOSE'], color = 'green', legend = 'Adjusted Closing')
+
+	# if "opening" in selected:
+	# 	ts_plot.line(data_plot.index, data_plot['OPEN'], color = 'yellow', legend = 'Opening')
+
+	# if "adj_opening" in selected:
+	# 	ts_plot.line(data_plot.index, data_plot['ADJ_OPEN'], color = 'red', legend = 'Adjusted Opening')
 
 	return ts_plot
 
