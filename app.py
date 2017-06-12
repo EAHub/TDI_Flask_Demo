@@ -9,7 +9,10 @@ import numpy as np
 import requests
 import json
 import pandas as pd
+from pandas import DataFrame, to_datetime
 import os
+import cgi
+import time
 
 
 app = Flask(__name__)
@@ -29,6 +32,10 @@ def plotter():
 
 	# get the json format data from quandl with requests.get
 	ticker_symbol = request.form['ticker_symbol']
+
+	start = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
+	end = (datetime.now()).strftime('%Y-%m-%d')
+
 	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/'+ticker_symbol+'.json?start_date='+start+'&end_date='+end+'&order=asc&api_key='+API_Key
 	quandl_data = requests.get(data_source)
 
