@@ -27,8 +27,7 @@ def plotter():
 
 	# get the json format data from quandl with requests.get
 	ticker_symbol = request.form['ticker_symbol']
-	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/' + ticker_symbol + 
-	'.json?start_date=' + start + '&end_date=' + end + '&order=asc&api_key=' + API_Key
+	data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/' + ticker_symbol + '.json?start_date=' + start + '&end_date=' + end + '&order=asc&api_key=' + API_Key
 	quandl_data = requests.get(data_source)
 
 	# using pandas to get a plottable df
