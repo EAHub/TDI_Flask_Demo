@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from pandas import DataFrame, to_datetime
-import pandas
+import pandas as pd
 import numpy as np
 import json
 import requests
@@ -8,12 +8,12 @@ import time
 import datetime
 from bokeh.plotting import figure, output_file, show
 from bokeh import embed
-import cgi
 from bokeh.charts import TimeSeries, show, output_file
 from bokeh.layouts import column
 from bokeh.resources import CDN
 from bokeh.embed import components
 import os
+import cgi
 
 
 
@@ -46,28 +46,29 @@ def plotter():
 	req = requests.get(url)
 	data = req.json()
 
-	# # using pandas to get a plottable df
-	# data_req = DataFrame(quandl_data.json())
-	# data_plot = DataFrame(data_req.ix['data','dataset'], columns = data_req.ix['column_names','dataset'])
-	# data_plot.columns = [x.lower() for x in data_plot.columns]
+	# get a plottable dataframe (from json object to pandas)
+	data_section = data['datatable']['data']
+	column_labels = ['ticker','date','open','high','low','close','volume','ex-dividend','split_ratio','adj_open','adj_high','adj_low','adj_close','adj_volume']
+	data_pd = pd.DataFrame(data = data_section, columns = column_labels)
 	
-	# data_plot = data_plot.set_index(['date'])
-	# data_plot.index = to_datetime(data_plot.index)
+	# setup date format for plot
+	data_pd = data_pd.set_index(['date'])
+	data_pd.index = pd.to_datetime(data_pd.index)
 
-	# # plot conditional lines in Bokeh
+	# plot lines conditionally using Bokeh
 	ts_plot = figure(x_axis_type = "datetime")
 
-	# if "closing" in selected:
-	# 	ts_plot.line(data_plot.index, data_plot['CLOSE'], color = 'blue', legend = 'Closing')
+	if "closing" in selected:
+	 	ts_plot.line(data_pd.index, data_pd['close'], color = 'blue', legend = 'Closing')
 
-	# if "adj_close" in selected:
-	# 	ts_plot.line(data_plot.index, data_plot['ADJ_CLOSE'], color = 'green', legend = 'Adjusted Closing')
+	if "adj_close" in selected:
+		ts_plot.line(data_pd.index, data_pd['adj_close'], color = 'green', legend = 'Adjusted Closing')
 
-	# if "opening" in selected:
-	# 	ts_plot.line(data_plot.index, data_plot['OPEN'], color = 'yellow', legend = 'Opening')
+	if "opening" in selected:
+		ts_plot.line(data_pd.index, data_pd['open'], color = 'yellow', legend = 'Opening')
 
-	# if "adj_opening" in selected:
-	# 	ts_plot.line(data_plot.index, data_plot['ADJ_OPEN'], color = 'red', legend = 'Adjusted Opening')
+	if "adj_opening" in selected:
+		ts_plot.line(data_pd.index, data_pd['adj_open'], color = 'red', legend = 'Adjusted Opening')
 
 	return ts_plot
 
