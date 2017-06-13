@@ -42,8 +42,6 @@ def plotter():
 	req = requests.get(url)
 	data = req.json()
 
-	return data
-
 	# start = 20170501
 	# end = 20170612
 	# data_source = 'https://www.quandl.com/api/v3/datasets/WIKI/PRICES.json?date.gte='+start+'&date.lt='+end+'&ticker='+ticker_symbol+'&api_key='+API_Key
@@ -67,7 +65,7 @@ def plotter():
 	# data_plot.index = to_datetime(data_plot.index)
 
 	# # plot conditional lines in Bokeh
-	# ts_plot = figure(x_axis_type = "datetime")
+	ts_plot = figure(x_axis_type = "datetime")
 
 	# if "closing" in selected:
 	# 	ts_plot.line(data_plot.index, data_plot['CLOSE'], color = 'blue', legend = 'Closing')
@@ -81,15 +79,14 @@ def plotter():
 	# if "adj_opening" in selected:
 	# 	ts_plot.line(data_plot.index, data_plot['ADJ_OPEN'], color = 'red', legend = 'Adjusted Opening')
 
-	# return ts_plot
+	return ts_plot
 
 
 @app.route('/Page2', methods=['GET', 'POST'])
 def Page2():
-	# plot = plotter()
-	data = plotter()
+	plot = plotter()
 	script, div = embed.components(plot)
-	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script, data = data)
+	return render_template('Page2.html', ticker_symbol = request.form['ticker_symbol'], div = div, script = script)
 
 if __name__ == '__main__':
   app.run(port=33507)
