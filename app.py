@@ -5,11 +5,11 @@ import numpy as np
 import json
 import requests
 import time
-from datetime
+import datetime
 from bokeh.plotting import figure, output_file, show
 from bokeh import embed
 import cgi
-from bokeh.charts import TimeSeries
+from bokeh.charts import TimeSeries, show, output_file
 from bokeh.layouts import column
 from bokeh.resources import CDN
 from bokeh.embed import components
