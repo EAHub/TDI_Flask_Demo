@@ -31,15 +31,17 @@ def Page1():
   return render_template('Page1.html')
 
 def plotter():
-	# find out what the user wants
+	# find out what data the user wants plotted
 	selected = request.form.getlist('check')
 
-	# get the json format data from quandl with requests.get
+	# pull in the ticker info from page 1
 	ticker = request.form['ticker_symbol']
 
+	# calculate custom start and end dates as strings, based on where you are today
 	start = (datetime.datetime.now() + datetime.timedelta(-30)).strftime("%Y%m%d")
 	end = time.strftime("%Y%m%d")
 
+	# form custom url to fetch data from quandl using requests library (as json)
 	url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?date.gte='+start+'&date.lt='+end+'&ticker='+ticker+'&api_key='+API_Key
 	req = requests.get(url)
 	data = req.json()
