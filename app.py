@@ -39,7 +39,7 @@ def plotter():
 
 
 	url = "https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?date.gte=20120101&date.lt=20120131&ticker=GOOG&api_key="+API_Key
-	data = requests.get(search_url)
+	data = requests.get(url)
 
 	# start = 20170501
 	# end = 20170612
