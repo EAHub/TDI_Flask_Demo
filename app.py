@@ -35,7 +35,7 @@ def plotter():
 	selected = request.form.getlist('check')
 
 	# get the json format data from quandl with requests.get
-	ticker_symbol = request.form['ticker_symbol']
+	ticker = request.form['ticker_symbol']
 
 	# start = 20170501
 	# end = 20170612
@@ -60,7 +60,7 @@ def plotter():
 	# data_plot.index = to_datetime(data_plot.index)
 
 	# # plot conditional lines in Bokeh
-	# ts_plot = figure(x_axis_type = "datetime")
+	ts_plot = figure(x_axis_type = "datetime")
 
 	# if "closing" in selected:
 	# 	ts_plot.line(data_plot.index, data_plot['CLOSE'], color = 'blue', legend = 'Closing')
